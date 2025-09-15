@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grain Storage Techniques</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f9f6;
+      margin: 0; padding: 20px;
+      color: #333;
+    }
+    h2 { color: #4caf50; text-align: center; }
+    .btn-group { text-align: center; margin-bottom: 1rem; }
+    button {
+      background: #4caf50; color: white;
+      border: none; border-radius: 5px;
+      padding: 8px 16px; margin: 0 5px;
+      cursor: pointer; font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+    button:hover { background: #43a047; }
+    .content {
+      max-width: 800px; margin: auto;
+      background: white; padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    ul { padding-left: 20px; line-height: 1.6; }
+    em { color: #2e7d32; }
+  </style>
+</head>
+<body>
+
+  <h2>🏠 Grain Storage Techniques</h2>
+
+  <div class="btn-group">
+    <button onclick="setLanguage('en')">English</button>
+    <button onclick="setLanguage('hi')">हिन्दी</button>
+  </div>
+
+  <div id="storageContent" class="content">
+    <!-- Dynamic content will load here -->
+  </div>
+
+  <script>
+    const content = {
+      en: `
+        <p>Proper grain storage keeps harvest safe from pests, moisture, and spoilage. Here are common methods:</p>
+        <ul>
+          <li><strong>Metal or Plastic Bins:</strong> Airtight containers protect grains from insects and rats.</li>
+          <li><strong>Gunny Bags on Pallets:</strong> Keep bags off the ground and away from walls to prevent moisture.</li>
+          <li><strong>Hermetic Bags:</strong> Special bags that lock out air and pests—ideal for small farmers.</li>
+          <li><strong>Underground Pits:</strong> Low-cost method; line pits with plastic or mud plaster to keep grains dry.</li>
+          <li><strong>Community Warehouses:</strong> Use nearby warehouses for large quantities; safer and insured.</li>
+        </ul>
+        <p><em>Tip:</em> Always dry grains to about 12–14% moisture before storage.</p>
+      `,
+      hi: `
+        <p>सही भंडारण अनाज को कीट, नमी और खराब होने से बचाता है। यहाँ कुछ सामान्य तरीके हैं:</p>
+        <ul>
+          <li><strong>धातु या प्लास्टिक डिब्बे:</strong> सील किए हुए डिब्बे कीट और चूहों से अनाज की रक्षा करते हैं।</li>
+          <li><strong>गन्नी बैग (पैलेट पर):</strong> बैग को जमीन और दीवारों से दूर रखें ताकि नमी न लगे।</li>
+          <li><strong>हर्मेटिक बैग:</strong> खास बैग जो हवा और कीटों को बाहर रखते हैं—छोटे किसानों के लिए बेहतर।</li>
+          <li><strong>भूमिगत गड्ढे:</strong> सस्ता तरीका; प्लास्टिक या मिट्टी से गड्ढे को लाइन करें ताकि अनाज सूखा रहे।</li>
+          <li><strong>सामुदायिक गोदाम:</strong> अधिक मात्रा के लिए पास के गोदाम का उपयोग करें; सुरक्षित और बीमाकृत।</li>
+        </ul>
+        <p><em>सुझाव:</em> भंडारण से पहले अनाज को लगभग 12–14% नमी तक सुखाएँ।</p>
+      `
+    };
+
+    function setLanguage(lang) {
+      const container = document.getElementById('storageContent');
+      if (container) container.innerHTML = content[lang] || content.en;
+    }
+
+    // Wait for DOM to be ready before loading default
+    document.addEventListener('DOMContentLoaded', () => {
+      setLanguage('en');
+    });
+  </script>
+
+</body>
+</html>

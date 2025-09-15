@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Farmer Dashboard – Junkle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif; margin: 0; padding: 0;
+      background: #f5f9f6; color: #333;
+    }
+    header {
+      background: #4caf50; color: white;
+      padding: 1rem; text-align: center;
+    }
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap: 1.5rem; padding: 2rem;
+    }
+    .card {
+      background: white; padding: 1.5rem;
+      border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      cursor: pointer; text-align: center;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    .hidden { display: none; }
+    #contentSection { padding: 2rem; }
+    button {
+      background: #4caf50; color: white; border: none;
+      padding: .6rem 1rem; border-radius: 6px;
+      cursor: pointer; margin-bottom: 1rem;
+    }
+    button:hover { background: #43a047; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>👨‍🌾 Junkle – Farmer Dashboard</h1>
+  </header>
+
+  <!-- Main Cards -->
+  <main id="cardSection" class="card-container">
+    <div class="card" data-page="market.html">
+      <h2>🛒 Market</h2><p>View crop prices & vendor offers</p>
+    </div>
+    <div class="card" data-page="climate.html">
+      <h2>🌦 Climate</h2><p>Check weather & alerts</p>
+    </div>
+    <div class="card" data-page="storage.html">
+      <h2>🏠 Storage Info</h2><p>Find nearby warehouses & tips</p>
+    </div>
+    <div class="card" data-page="news.html">
+      <h2>📜 Schemes & News</h2><p>Government schemes & agri-news</p>
+    </div>
+  </main>
+
+  <!-- Dynamic Content -->
+  <section id="contentSection" class="hidden">
+    <button id="backBtn">⬅ Back</button>
+    <div id="contentArea"></div>
+  </section>
+
+  <script>
+    const cardSection = document.getElementById('cardSection');
+    const contentSection = document.getElementById('contentSection');
+    const contentArea = document.getElementById('contentArea');
+    const backBtn = document.getElementById('backBtn');
+
+    cardSection.addEventListener('click', async (e) => {
+      const card = e.target.closest('.card');
+      if (!card) return;
+      const page = card.dataset.page;
+      try {
+        const response = await fetch(page);
+        const html = await response.text();
+        contentArea.innerHTML = html;
+        cardSection.style.display = 'none';
+        contentSection.classList.remove('hidden');
+      } catch (err) {
+        contentArea.innerHTML = '<p>Error loading content.</p>';
+      }
+    });
+
+    backBtn.addEventListener('click', () => {
+      contentSection.classList.add('hidden');
+      cardSection.style.display = 'grid';
+    });
+  </script>
+</body>
+</html>
