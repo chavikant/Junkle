@@ -36,6 +36,16 @@
       cursor: pointer; margin-bottom: 1rem;
     }
     button:hover { background: #43a047; }
+    .content {
+      max-width: 800px; margin: auto;
+      background: white; padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .btn-group { text-align: center; margin-bottom: 1rem; }
+    h2 { color: #4caf50; text-align: center; }
+    ul { padding-left: 20px; line-height: 1.6; }
+    em { color: #2e7d32; }
   </style>
 </head>
 <body>
@@ -71,14 +81,48 @@
     const contentArea = document.getElementById('contentArea');
     const backBtn = document.getElementById('backBtn');
 
+    const storageContent = {
+      en: `
+        <p>Proper grain storage keeps harvest safe from pests, moisture, and spoilage. Here are common methods:</p>
+        <ul>
+          <li><strong>Metal or Plastic Bins:</strong> Airtight containers protect grains from insects and rats.</li>
+          <li><strong>Gunny Bags on Pallets:</strong> Keep bags off the ground and away from walls to prevent moisture.</li>
+          <li><strong>Hermetic Bags:</strong> Special bags that lock out air and pests—ideal for small farmers.</li>
+          <li><strong>Underground Pits:</strong> Low-cost method; line pits with plastic or mud plaster to keep grains dry.</li>
+          <li><strong>Community Warehouses:</strong> Use nearby warehouses for large quantities; safer and insured.</li>
+        </ul>
+        <p><em>Tip:</em> Always dry grains to about 12–14% moisture before storage.</p>
+      `,
+      hi: `
+        <p>सही भंडारण अनाज को कीट, नमी और खराब होने से बचाता है। यहाँ कुछ सामान्य तरीके हैं:</p>
+        <ul>
+          <li><strong>धातु या प्लास्टिक डिब्बे:</strong> सील किए हुए डिब्बे कीट और चूहों से अनाज की रक्षा करते हैं।</li>
+          <li><strong>गन्नी बैग (पैलेट पर):</strong> बैग को जमीन और दीवारों से दूर रखें ताकि नमी न लगे।</li>
+          <li><strong>हर्मेटिक बैग:</strong> खास बैग जो हवा और कीटों को बाहर रखते हैं—छोटे किसानों के लिए बेहतर।</li>
+          <li><strong>भूमिगत गड्ढे:</strong> सस्ता तरीका; प्लास्टिक या मिट्टी से गड्ढे को लाइन करें ताकि अनाज सूखा रहे।</li>
+          <li><strong>सामुदायिक गोदाम:</strong> अधिक मात्रा के लिए पास के गोदाम का उपयोग करें; सुरक्षित और बीमाकृत।</li>
+        </ul>
+        <p><em>सुझाव:</em> भंडारण से पहले अनाज को लगभग 12–14% नमी तक सुखाएँ।</p>
+      `
+    };
+
+    function setLanguage(lang) {
+      const container = document.getElementById('storageContent');
+      if (container) container.innerHTML = storageContent[lang] || storageContent.en;
+    }
+
     cardSection.addEventListener('click', async (e) => {
       const card = e.target.closest('.card');
       if (!card) return;
-      const page = card.dataset.page;
+      let page = card.dataset.page;
+      if (page === 'storage.html') {
+        page = 'storage-content.html';
+      }
       try {
         const response = await fetch(page);
         const html = await response.text();
         contentArea.innerHTML = html;
+        setLanguage('en'); // Initialize content to English after loading
         cardSection.style.display = 'none';
         contentSection.classList.remove('hidden');
       } catch (err) {
